@@ -2,10 +2,11 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "4.4.4"
     id("io.micronaut.aot") version "4.4.4"
+    id('checkstyle')
 }
 
 version = "0.1"
-group = "org.evoting"
+group = "org.evoting.signature"
 
 repositories {
     mavenCentral()
@@ -48,13 +49,13 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("org.evoting.*")
+        annotations("org.evoting.signature.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
         // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        optimizeServiceLoading = false
-        convertYamlToJava = false
+        optimizeServiceLoading = true
+        convertYamlToJava = true
         precomputeOperations = true
         cacheEnvironment = true
         optimizeClassLoading = true
@@ -64,9 +65,19 @@ micronaut {
     }
 }
 
+checkstyle {
+    toolVersion = '10.21.0'
+    configFile = file("${rootProject.projectDir}/config/checkstyle/checkstyle.xml")
+}
+
+
+
+tasks.named('javadoc', Javadoc).configure {
+    title = "Dokumentacja API dla mojego projektu"
+    options.encoding = 'UTF-8'
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
 
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
 }
-
-

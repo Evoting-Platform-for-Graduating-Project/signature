@@ -1,4 +1,4 @@
-package org.evoting.domain.test;
+package org.evoting.signature.domain.test;
 
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.AllArgsConstructor;

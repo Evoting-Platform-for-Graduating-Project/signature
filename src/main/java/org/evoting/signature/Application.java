@@ -1,4 +1,4 @@
-package org.evoting;
+package org.evoting.signature;
 
 import io.micronaut.runtime.Micronaut;
 
