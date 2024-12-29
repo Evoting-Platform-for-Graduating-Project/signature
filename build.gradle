@@ -3,6 +3,7 @@ plugins {
     id("io.micronaut.application") version "4.4.4"
     id("io.micronaut.aot") version "4.4.4"
     id('checkstyle')
+    id("com.github.spotbugs") version "6.0.27"
 }
 
 version = "0.1"
@@ -80,4 +81,15 @@ tasks.named('javadoc', Javadoc).configure {
 
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
+}
+
+spotbugs {
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
+    reports {
+        xml.required = false
+        html.required = true
+        html.outputLocation.set(file("${rootProject.projectDir}/build/reports/spotbugs/main.html"))
+    }
 }
