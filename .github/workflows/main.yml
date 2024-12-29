@@ -10,11 +10,12 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+
+run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 
 jobs:
   build:
+    name: Gradle build
     runs-on: self-hosted
     permissions:
       contents: read
@@ -34,6 +35,7 @@ jobs:
       run: ./gradlew build
 
   dependency-submission:
+    name: Gradle dependency submission
     runs-on: self-hosted
     permissions:
       contents: write
